@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.activity.SignActivity">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/yeonsung_regular"
+        android:text="UniBite"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="Frase"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="@+id/textView20"
+        app:layout_constraintStart_toStartOf="@+id/textView20"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/lato_bold"
+        android:text="Registrate"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView21"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddress3"
+        android:layout_width="325dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/edittextshape"
+        android:drawableLeft="@drawable/user_plus"
+        android:drawablePadding="@dimen/drawablePadding"
+        android:elevation="5dp"
+        android:ems="10"
+        android:fontFamily="@font/lato_regular"
+        android:hint="Nombre Completo"
+        android:inputType="text"
+        android:paddingLeft="9dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView22"
+        app:layout_constraintStart_toStartOf="@+id/textView22"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddress4"
+        android:layout_width="325dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittextshape"
+        android:drawableLeft="@drawable/mail"
+        android:drawablePadding="@dimen/drawablePadding"
+        android:elevation="5dp"
+        android:ems="10"
+        android:fontFamily="@font/lato_regular"
+        android:hint="Correo Electrónico"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="9dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress3"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress3"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress3" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword3"
+        android:layout_width="325dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittextshape"
+        android:drawableLeft="@drawable/lock"
+        android:drawablePadding="@dimen/drawablePadding"
+        android:elevation="5dp"
+        android:ems="10"
+        android:fontFamily="@font/lato_regular"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:paddingLeft="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress4"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress4"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress4" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="O"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword3"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword3"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword3" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/yeonsung_regular"
+        android:text="Registrate Con"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView23"
+        app:layout_constraintStart_toStartOf="@+id/textView23"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button7"
+        android:layout_width="@dimen/socialButtonWidth"
+        android:layout_height="@dimen/socialButtonHeight"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/whitebutton"
+        android:drawableLeft="@drawable/facebook"
+        android:fontFamily="@font/lato_regular"
+        android:paddingLeft="@dimen/drawablePadding"
+        android:text="Facebook"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/button8"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button8"
+        android:layout_width="@dimen/socialButtonWidth"
+        android:layout_height="@dimen/socialButtonHeight"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/whitebutton"
+        android:drawableLeft="@drawable/google"
+        android:fontFamily="@font/lato_regular"
+        android:paddingLeft="@dimen/drawablePadding"
+        android:text="Google"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button7"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button9"
+        android:layout_width="157dp"
+        android:layout_height="@dimen/socialButtonHeight"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/greenbuttongradient"
+        android:fontFamily="@font/lato_bold"
+        android:text="Crear Cuenta"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+
+    <TextView
+        android:id="@+id/already_have_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/lato_extrabold"
+        android:text="¿Ya Tienes Una Cuenta?"
+        android:textColor="@color/textColor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/button9"
+        app:layout_constraintStart_toStartOf="@+id/button9"
+        app:layout_constraintTop_toBottomOf="@+id/button9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
