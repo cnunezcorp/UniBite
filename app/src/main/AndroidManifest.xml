@@ -13,9 +13,6 @@
         android:theme="@style/Theme.UniBite"
         tools:targetApi="31" >
         <activity
-            android:name=".AdminProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.activity.DetailsActivity"
             android:exported="false" />
         <activity
@@ -25,11 +22,17 @@
             android:name=".ui.activity.ChooseLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.SignActivity"
+            android:name=".ui.activity.SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.StartActivity"
             android:exported="false" />
@@ -39,13 +42,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
