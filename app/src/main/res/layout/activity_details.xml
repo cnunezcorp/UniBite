@@ -47,7 +47,7 @@
             android:id="@+id/detail_food_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             tools:src="@tools:sample/backgrounds/scenic" />
     </androidx.cardview.widget.CardView>
 
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
     <TextView
-        android:id="@+id/description_text_view"
+        android:id="@+id/detail_description_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -85,13 +85,13 @@
         android:text="Ingredientes"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/description_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/detail_description_text_view"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/description_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/description_text_view" />
+        app:layout_constraintStart_toStartOf="@+id/detail_description_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/detail_description_text_view" />
 
     <TextView
-        android:id="@+id/ingredients_text_view"
+        android:id="@+id/detail_ingredients_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -116,5 +116,5 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredients_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_ingredients_text_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
