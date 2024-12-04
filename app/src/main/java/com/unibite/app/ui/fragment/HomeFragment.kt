@@ -6,17 +6,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.unibite.app.R
+import com.unibite.app.data.MenuRepository
 import com.unibite.app.databinding.FragmentHomeBinding
+import com.unibite.app.domain.usecase.GetPopularItemsUseCase
+import com.unibite.app.model.MenuItemModel
+import com.unibite.app.ui.adapter.MenuAdapter
 import com.unibite.app.ui.adapter.PopularAdapter
+import com.unibite.app.viewmodel.HomeViewModel
+import com.unibite.app.viewmodel.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private val homeViewModel: HomeViewModel by lazy {
+        val repository = MenuRepository() // Repositorio existente
+        val useCase = GetPopularItemsUseCase(repository)
+        val factory = HomeViewModelFactory(useCase)
+        ViewModelProvider(this, factory)[HomeViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +48,33 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.viewAllMenu.setOnClickListener{
+        setupObservers()
+
+        binding.viewAllMenu.setOnClickListener {
             val bottomSheetDialog = MenuBottomSheetFragment()
-            bottomSheetDialog.show(parentFragmentManager, "Test")
+            bottomSheetDialog.show(parentFragmentManager, "BottomSheet")
         }
+        homeViewModel.fetchPopularItems() // Obtiene los elementos populares
         return binding.root
     }
 
+    private fun setupObservers() {
+        homeViewModel.popularItems.observe(viewLifecycleOwner) { items ->
+            setPopularItemsAdapter(items)
+        }
 
+        homeViewModel.error.observe(viewLifecycleOwner) { error ->
+            // Muestra el error si ocurre
+        }
+    }
+
+    private fun setPopularItemsAdapter(items: List<MenuItemModel>) {
+        val adapter = MenuAdapter(items, requireContext())
+        binding.popularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.popularRecyclerView.adapter = adapter
+    }
+
+    //Configurando Banner
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,20 +97,6 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), itemMessage, Toast.LENGTH_SHORT).show()
             }
         })
-        val foodName = listOf("Hamburguesa", "Sandwich", "Burrito", "Papas")
-        val price = listOf("RD$300", "RD$100", "RD$250", "RD$60")
-        val populerFoodImages =
-            listOf(
-                R.drawable.menu1,
-                R.drawable.menu2,
-                R.drawable.menu3,
-                R.drawable.menu4
-            )
-        val adapter = PopularAdapter(foodName, price, populerFoodImages, requireContext())
-        binding.populerRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.populerRecyclerView.adapter = adapter
     }
 
-    companion object {
-    }
 }
