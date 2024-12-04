@@ -19,30 +19,26 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailsBinding
     private lateinit var auth: FirebaseAuth
-    private var foodName: String? = null
-    private var foodPrice: String? = null
-    private var foodDescription: String? = null
-    private var foodImage: String? = null
-    private var foodIngredients: String? = null
+    private var menuItem: MenuItemModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Inicializando FirebaseAuth
-
+        // Inicializando FirebaseAuth
+        auth = FirebaseAuth.getInstance()
 
         // Recibiendo el objeto completo
-        val menuItem = intent.getParcelableExtra<MenuItemModel>("MenuItem")
+        menuItem = intent.getParcelableExtra("MenuItem")
 
         // Verificando y mostrando los datos
-        menuItem?.let {
+        menuItem?.let { item ->
             with(binding) {
-                detailFoodName.text = it.foodName
-                detailDescriptionTextView.text = it.foodDescription
-                detailIngredientsTextView.text = it.foodIngredient
-                Glide.with(this@DetailsActivity).load(Uri.parse(it.foodImage)).into(detailFoodImage)
+                detailFoodName.text = item.foodName
+                detailDescriptionTextView.text = item.foodDescription
+                detailIngredientsTextView.text = item.foodIngredient
+                Glide.with(this@DetailsActivity).load(Uri.parse(item.foodImage)).into(detailFoodImage)
             }
         } ?: run {
             // Si no hay datos, mostrar un error o mensaje
@@ -54,19 +50,36 @@ class DetailsActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.detailAddToCartButton.setOnClickListener{
+        binding.detailAddToCartButton.setOnClickListener {
+            addToCart()
+        }
+    }
+
+    private fun addToCart() {
+        menuItem?.let { item ->
             val database = FirebaseDatabase.getInstance().reference
-            val userId = auth.currentUser?.uid?:""
+            val userId = auth.currentUser?.uid ?: ""
 
-            //crear a cartItems Object
-            val cartItem = CartItemsModel(foodName.toString(), foodPrice.toString(), foodDescription.toString(), foodImage.toString(), 1)
+            // Crear un CartItemsModel con todos los valores del MenuItem
+            val cartItem = CartItemsModel(
+                foodName = item.foodName,
+                foodPrice = item.foodPrice,
+                foodDescription = item.foodDescription,
+                foodImage = item.foodImage,
+                foodQuantity = 1,
+                foodIngredient = item.foodIngredient
+            )
 
-            //Guardando datos en la BD
-            database.child("user").child(userId).child("CartItems").push().setValue(cartItem).addOnSuccessListener {
-                Toast.makeText(this, "Producto Añadido al Carrito Correctamente 😁", Toast.LENGTH_LONG).show()
-            } .addOnFailureListener {
-                Toast.makeText(this, "No Se Puede Añadir al Carrito 😥", Toast.LENGTH_SHORT).show()
-            }
+            // Guardando datos en la BD
+            database.child("user").child(userId).child("CartItems").push().setValue(cartItem)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Producto Añadido al Carrito Correctamente 😁", Toast.LENGTH_LONG).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "No Se Puede Añadir al Carrito 😥", Toast.LENGTH_SHORT).show()
+                }
+        } ?: run {
+            Toast.makeText(this, "Error: Información del producto no disponible", Toast.LENGTH_SHORT).show()
         }
     }
 }
