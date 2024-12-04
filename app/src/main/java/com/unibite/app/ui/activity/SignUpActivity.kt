@@ -92,8 +92,8 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.registerButton.setOnClickListener {
-            val name = binding.name.text.toString().trim()
-            val email = binding.email.text.toString().trim()
+            val name = binding.signUpName.text.toString().trim()
+            val email = binding.signUpEmail.text.toString().trim()
             val password = binding.password.text.toString().trim()
 
             if (name.isBlank() || email.isBlank() || password.isBlank()) {

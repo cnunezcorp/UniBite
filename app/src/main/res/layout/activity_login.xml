@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/login_email"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="24dp"
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/login_password"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="16dp"
@@ -102,9 +102,9 @@
         android:hint="Contraseña"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintEnd_toEndOf="@+id/login_email"
+        app:layout_constraintStart_toStartOf="@+id/login_email"
+        app:layout_constraintTop_toBottomOf="@+id/login_email" />
 
     <TextView
         android:id="@+id/textView9"
@@ -113,9 +113,9 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/lato_regular"
         android:text="O"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintEnd_toEndOf="@+id/login_password"
+        app:layout_constraintStart_toStartOf="@+id/login_password"
+        app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
     <TextView
         android:id="@+id/textView10"
@@ -129,23 +129,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
-        android:layout_width="@dimen/socialButtonWidth"
-        android:layout_height="@dimen/socialButtonHeight"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/whitebutton"
-        android:drawableLeft="@drawable/facebook"
-        android:fontFamily="@font/lato_regular"
-        android:paddingLeft="@dimen/drawablePadding"
-        android:text="Facebook"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button2"
+        android:id="@+id/google_login_button"
         android:layout_width="@dimen/socialButtonWidth"
         android:layout_height="@dimen/socialButtonHeight"
         android:layout_marginTop="16dp"
@@ -155,9 +139,25 @@
         android:paddingLeft="@dimen/drawablePadding"
         android:text="Google"
         android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/facebook_login_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/facebook_login_button"
+        android:layout_width="@dimen/socialButtonWidth"
+        android:layout_height="@dimen/socialButtonHeight"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/whitebutton"
+        android:drawableLeft="@drawable/facebook"
+        android:fontFamily="@font/lato_regular"
+        android:paddingLeft="@dimen/drawablePadding"
+        android:text="Facebook"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/google_login_button"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -173,7 +173,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/google_login_button" />
 
     <TextView
         android:id="@+id/dont_have_button"

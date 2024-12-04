@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/sign_up_name"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="24dp"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/sign_up_email"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="16dp"
@@ -86,9 +86,9 @@
         android:hint="Correo Electrónico"
         android:inputType="textEmailAddress"
         android:paddingLeft="9dp"
-        app:layout_constraintEnd_toEndOf="@+id/name"
-        app:layout_constraintStart_toStartOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintEnd_toEndOf="@+id/sign_up_name"
+        app:layout_constraintStart_toStartOf="@+id/sign_up_name"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_name" />
 
     <EditText
         android:id="@+id/password"
@@ -104,9 +104,9 @@
         android:hint="Contraseña"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/email"
-        app:layout_constraintStart_toStartOf="@+id/email"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintEnd_toEndOf="@+id/sign_up_email"
+        app:layout_constraintStart_toStartOf="@+id/sign_up_email"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_email" />
 
     <TextView
         android:id="@+id/textView23"
