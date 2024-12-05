@@ -30,7 +30,7 @@ class BuyAgainAdapter (private val buyAgainFoodName:MutableList<String>,
     inner class BuyAgainViewHolder(private val binding: BuyAgainItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(foodName: String, foodPrice: String, foodImage:String){
             binding.buyAgainFoodName.text = foodName
-            binding.buyAgainFoodPrice.text = foodPrice
+            binding.buyAgainFoodPrice.text = "${foodPrice}$"
             val uriString = foodImage
             val uri = Uri.parse(uriString)
             Glide.with(requireContext).load(uri).into(binding.buyAgainFoodImage)

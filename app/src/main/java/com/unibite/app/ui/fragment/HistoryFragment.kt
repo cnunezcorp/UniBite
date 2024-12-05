@@ -3,6 +3,7 @@ package com.unibite.app.ui.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -61,30 +62,33 @@ class HistoryFragment : Fragment() {
 
     private fun retrieveBuyHistory() {
         binding.recentBuyItem.visibility = View.INVISIBLE
-        userId = auth.currentUser?.uid?:""
+        userId = auth.currentUser?.uid ?: ""
 
         val buyItemReference: DatabaseReference = database.reference.child("user").child(userId).child("BuyHistory")
         val shortingQuery = buyItemReference.orderByChild("currentTime")
 
         shortingQuery.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (buySnapshot in snapshot.children){
+                for (buySnapshot in snapshot.children) {
                     val buyHistoryItem = buySnapshot.getValue(OrderDetails::class.java)
                     buyHistoryItem?.let {
+                        // Log detallado del historial recuperado
+                        Log.d("HistoryFragment", "Buy History Item: $it")
                         listOfOrderItem.add(it)
                     }
                 }
                 listOfOrderItem.reverse()
-                if (listOfOrderItem.isNotEmpty()){
+                if (listOfOrderItem.isNotEmpty()) {
                     setDataInRecentBuyItem()
                     setPreviousBuyItemsRecyclerView()
+                } else {
+                    Log.d("HistoryFragment", "No items found in buy history.")
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("HistoryFragment", "Error retrieving buy history: ${error.message}")
             }
-
         })
     }
 
@@ -92,18 +96,16 @@ class HistoryFragment : Fragment() {
         binding.recentBuyItem.visibility = View.VISIBLE
         val recentOrderItem = listOfOrderItem.firstOrNull()
         recentOrderItem?.let {
-            with(binding){
-                buyAgainFoodName.text = it.foodNames?.firstOrNull()?:""
-                buyAgainFoodPrice.text = it.foodPrices?.firstOrNull()?:""
-                val image = it.foodImages?.firstOrNull()?:""
+            with(binding) {
+                Log.d("HistoryFragment", "Recent Order: $it")
+                buyAgainFoodName.text = it.foodNames?.firstOrNull() ?: ""
+                buyAgainFoodPrice.text = "${it.foodPrices?.firstOrNull() ?: ""}$"
+                val image = it.foodImages?.firstOrNull() ?: ""
                 val uri = Uri.parse(image)
                 Glide.with(requireContext()).load(uri).into(buyAgainFoodImage)
-
-                listOfOrderItem.reverse()
-                if (listOfOrderItem.isNotEmpty()){
-
-                }
             }
+        } ?: run {
+            Log.d("HistoryFragment", "No recent order found.")
         }
     }
 
@@ -111,11 +113,20 @@ class HistoryFragment : Fragment() {
         val buyAgainFoodName = mutableListOf<String>()
         val buyAgainFoodPrice = mutableListOf<String>()
         val buyAgainFoodImage = mutableListOf<String>()
-        for (i in 1 until listOfOrderItem.size){
-            listOfOrderItem[i].foodNames?.firstOrNull()?.let { buyAgainFoodName.add(it) }
-            listOfOrderItem[i].foodPrices?.firstOrNull()?.let { buyAgainFoodPrice.add(it) }
-            listOfOrderItem[i].foodImages?.firstOrNull()?.let { buyAgainFoodImage.add(it) }
+
+        for (i in 1 until listOfOrderItem.size) { // Omitir el primero (ya usado en `recentBuyItem`)
+            val order = listOfOrderItem[i]
+            Log.d("HistoryFragment", "Processing Order: $order")
+            order.foodNames?.firstOrNull()?.let { buyAgainFoodName.add(it) }
+            order.foodPrices?.firstOrNull()?.let { buyAgainFoodPrice.add(it) }
+            order.foodImages?.firstOrNull()?.let { buyAgainFoodImage.add(it) }
         }
+
+        // Log final de las listas generadas
+        Log.d("HistoryFragment", "Final Buy Again Names: $buyAgainFoodName")
+        Log.d("HistoryFragment", "Final Buy Again Prices: $buyAgainFoodPrice")
+        Log.d("HistoryFragment", "Final Buy Again Images: $buyAgainFoodImage")
+
         val rv = binding.buyAgainRecyclerView
         rv.layoutManager = LinearLayoutManager(requireContext())
         buyAgainAdapter = BuyAgainAdapter(buyAgainFoodName, buyAgainFoodPrice, buyAgainFoodImage, requireContext())

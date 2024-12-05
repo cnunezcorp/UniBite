@@ -50,12 +50,12 @@ class PayOutActivity : AppCompatActivity() {
 
         //Get user details from Firebase
         val intent = intent
-        foodItemName = intent.getStringArrayListExtra("FoodItemName") as ArrayList<String>
-        foodItemPrice = intent.getStringArrayListExtra("FoodItemPrice") as ArrayList<String>
-        foodItemImage = intent.getStringArrayListExtra("FoodItemImage") as ArrayList<String>
-        foodItemDescription = intent.getStringArrayListExtra("FoodItemDescription") as ArrayList<String>
-        foodItemIngredient = intent.getStringArrayListExtra("FoodItemIngredient") as ArrayList<String>
-        foodItemQuantities = intent.getIntegerArrayListExtra("FoodItemQuantities") as ArrayList<Int>
+        foodItemName = intent.getStringArrayListExtra("FoodItemName") ?: arrayListOf()
+        foodItemPrice = intent.getStringArrayListExtra("FoodItemPrice") ?: arrayListOf()
+        foodItemImage = intent.getStringArrayListExtra("FoodItemImage") ?: arrayListOf()
+        foodItemDescription = intent.getStringArrayListExtra("FoodItemDescription") ?: arrayListOf()
+        foodItemIngredient = intent.getStringArrayListExtra("FoodItemIngredient") ?: arrayListOf()
+        foodItemQuantities = intent.getIntegerArrayListExtra("FoodItemQuantities") ?: arrayListOf()
 
         totalAmount = calculateTotalAmount().toString() + "$"
         binding.payTotalAmount.isEnabled = false
@@ -68,7 +68,7 @@ class PayOutActivity : AppCompatActivity() {
         binding.placeMyOrder.setOnClickListener{
 
             //get data from TextView
-            name = binding.payName.toString().trim()
+            name = binding.payName.text.toString().trim()
             phone = binding.payPhone.text.toString().trim()
             if (name.isBlank() && phone.isBlank()){
                 Toast.makeText(this, "Debe Completar Todos los Detalles", Toast.LENGTH_SHORT).show()

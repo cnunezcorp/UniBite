@@ -34,7 +34,7 @@ class RecentBuyAdapter(
         fun bind(position: Int) {
             binding.apply {
                 foodName.text = foodNameList[position]
-                foodPrice.text = foodPriceList[position]
+                foodPrice.text = "${foodPriceList[position]}$"
                 foodQuantity.text = foodQuantityList[position].toString()
                 val uriString = foodImageList[position]
                 val uri = Uri.parse(uriString)

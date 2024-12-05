@@ -80,7 +80,7 @@ class CartAdapter(
         fun bind(position: Int) {
             binding.apply {
                 cartFoodName.text = foodNames[position]
-                cartItemPrice.text = foodPrices[position]
+                cartItemPrice.text = "${foodPrices[position]}$"
 
                 Glide.with(context).load(foodImages[position]).into(cartFoodImage)
 
