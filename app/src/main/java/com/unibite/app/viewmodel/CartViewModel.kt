@@ -1,68 +1,62 @@
 package com.unibite.app.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.unibite.app.domain.usecase.CartUseCase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.unibite.app.model.CartItemsModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class CartViewModel(private val useCase: CartUseCase) : ViewModel() {
+class CartViewModel : ViewModel() {
+
     private val _cartItems = MutableStateFlow<List<CartItemsModel>>(emptyList())
     val cartItems: StateFlow<List<CartItemsModel>> get() = _cartItems
 
-    private val _loading = MutableStateFlow(false)
-    val loading: StateFlow<Boolean> get() = _loading
-
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> get() = _error
-
     fun fetchCartItems() {
         viewModelScope.launch {
-            _loading.value = true
             try {
-                _cartItems.value = useCase.fetchCartItems()
-                _error.value = null
+                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
+                val databaseReference = FirebaseDatabase.getInstance().getReference("user").child(userId).child("CartItems")
+
+                databaseReference.get().addOnSuccessListener { snapshot ->
+                    val cartItems = mutableListOf<CartItemsModel>()
+                    snapshot.children.forEach { child ->
+                        val item = child.getValue(CartItemsModel::class.java)
+                        item?.let { cartItems.add(it) }
+                    }
+                    _cartItems.value = cartItems
+                }.addOnFailureListener { exception ->
+                    Log.e("CartViewModel", "Error al obtener los datos: ${exception.message}")
+                }
             } catch (e: Exception) {
-                _error.value = e.message
-            } finally {
-                _loading.value = false
+                Log.e("CartViewModel", "Error en fetchCartItems: ${e.message}")
             }
         }
     }
 
-    fun addCartItem(cartItem: CartItemsModel) {
+    fun removeCartItem(itemKey: String) {
         viewModelScope.launch {
             try {
-                useCase.addCartItem(cartItem)
-                fetchCartItems()
+                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
+                val databaseReference = FirebaseDatabase.getInstance().getReference("user").child(userId).child("CartItems")
+                databaseReference.child(itemKey).removeValue().addOnSuccessListener {
+                    fetchCartItems() // Actualiza la lista después de eliminar el ítem
+                }.addOnFailureListener { exception ->
+                    Log.e("CartViewModel", "Error al eliminar el ítem: ${exception.message}")
+                }
             } catch (e: Exception) {
-                _error.value = e.message
+                Log.e("CartViewModel", "Error en removeCartItemFromFirebase: ${e.message}")
             }
         }
     }
 
-    fun removeCartItem(cartItemKey: String) {
+    fun updateCartItemQuantity(foodName: String, quantity: Int) {
         viewModelScope.launch {
-            try {
-                useCase.removeCartItem(cartItemKey)
-                fetchCartItems()
-            } catch (e: Exception) {
-                _error.value = e.message
-            }
-        }
-    }
-
-    fun updateCartItemQuantity(cartItemKey: String, newQuantity: Int) {
-        viewModelScope.launch {
-            try {
-                useCase.updateCartItemQuantity(cartItemKey, newQuantity)
-                fetchCartItems()
-            } catch (e: Exception) {
-                _error.value = e.message
+            _cartItems.value = _cartItems.value.map {
+                if (it.foodName == foodName) it.copy(foodQuantity = quantity) else it
             }
         }
     }

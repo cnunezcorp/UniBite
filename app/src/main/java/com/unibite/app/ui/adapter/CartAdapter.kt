@@ -33,6 +33,7 @@ class CartAdapter(
     private val foodImages = mutableListOf<String>()
     private val foodQuantities = mutableListOf<Int>()
     private val foodIngredients = mutableListOf<String>()
+    private val itemKeys = mutableListOf<String>()
 
     fun updateItems(
         names: List<String>,
@@ -40,7 +41,8 @@ class CartAdapter(
         descriptions: List<String>,
         images: List<String>,
         quantities: List<Int>,
-        ingredients: List<String>
+        ingredients: List<String>,
+        keys: List<String>
     ) {
         foodNames.clear()
         foodPrices.clear()
@@ -48,6 +50,7 @@ class CartAdapter(
         foodImages.clear()
         foodQuantities.clear()
         foodIngredients.clear()
+        itemKeys.clear()
 
         foodNames.addAll(names)
         foodPrices.addAll(prices)
@@ -55,6 +58,7 @@ class CartAdapter(
         foodImages.addAll(images)
         foodQuantities.addAll(quantities)
         foodIngredients.addAll(ingredients)
+        itemKeys.addAll(keys)
 
         notifyDataSetChanged()
     }
@@ -75,30 +79,26 @@ class CartAdapter(
 
         fun bind(position: Int) {
             binding.apply {
-                val quantity = foodQuantities[position]
                 cartFoodName.text = foodNames[position]
                 cartItemPrice.text = foodPrices[position]
 
-                Glide.with(context).load(Uri.parse(foodImages[position])).into(cartFoodImage)
+                Glide.with(context).load(foodImages[position]).into(cartFoodImage)
 
-                cartItemQuantity.text = quantity.toString()
+                cartItemQuantity.text = foodQuantities[position].toString()
 
                 minusButton.setOnClickListener {
-                    if (quantity > 1) {
-                        val newQuantity = quantity - 1
-                        onUpdateQuantity(foodNames[position], newQuantity)
+                    if (foodQuantities[position] > 1) {
+                        onUpdateQuantity(foodNames[position], foodQuantities[position] - 1)
                     }
                 }
 
                 plusButton.setOnClickListener {
-                    if (quantity < 10) {
-                        val newQuantity = quantity + 1
-                        onUpdateQuantity(foodNames[position], newQuantity)
-                    }
+                    onUpdateQuantity(foodNames[position], foodQuantities[position] + 1)
                 }
 
                 deleteButton.setOnClickListener {
-                    onRemoveItem(foodNames[position])
+                    val itemKey = itemKeys[position]
+                    onRemoveItem(itemKey)
                 }
             }
         }

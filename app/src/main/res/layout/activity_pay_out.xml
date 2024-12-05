@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/button6"
+            android:id="@+id/back_button"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="16dp"
@@ -63,13 +63,13 @@
                 android:textColor="@color/black" />
 
             <EditText
+                android:id="@+id/pay_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:fontFamily="@font/lato_regular"
-                android:hint="Nombre Completo"
                 android:inputType="text"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
@@ -98,13 +98,13 @@
                 android:textColor="@color/black" />
 
             <EditText
+                android:id="@+id/pay_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:fontFamily="@font/lato_regular"
-                android:hint="809-111-2222"
                 android:inputType="phone"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
@@ -164,6 +164,7 @@
                 android:textColor="@color/black" />
 
             <EditText
+                android:id="@+id/pay_total_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -173,7 +174,6 @@
                 android:gravity="end"
                 android:inputType="none"
                 android:paddingEnd="32dp"
-                android:text="RD$600"
                 android:textColor="@color/textColor"
                 android:textSize="20sp" />
         </LinearLayout>

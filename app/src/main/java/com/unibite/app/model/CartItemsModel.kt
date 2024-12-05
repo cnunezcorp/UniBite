@@ -6,5 +6,6 @@ data class CartItemsModel(
     val foodDescription: String? = null,
     val foodImage: String? = null,
     val foodQuantity: Int = 1,
-    val foodIngredient: String? = null
+    val foodIngredient: String? = null,
+    var itemKey: String? = null // Clave única en Firebase
 )

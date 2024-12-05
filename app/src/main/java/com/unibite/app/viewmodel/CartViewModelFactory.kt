@@ -2,9 +2,15 @@ package com.unibite.app.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.unibite.app.data.CartRepository
-import com.unibite.app.domain.usecase.CartUseCase
 
+class CartViewModelFactory : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return CartViewModel() as T
+    }
+}
+
+
+/*
 class CartViewModelFactory : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -15,4 +21,4 @@ class CartViewModelFactory : ViewModelProvider.Factory {
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}*/

@@ -1,5 +1,6 @@
 package com.unibite.app.data
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -13,42 +14,29 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class CartRepository {
-    private val auth = FirebaseAuth.getInstance()
     private val database = FirebaseDatabase.getInstance()
 
-    suspend fun fetchCartItems(): List<CartItemsModel> = suspendCoroutine { continuation ->
-        val userId = auth.currentUser?.uid ?: ""
-        val cartReference = database.reference.child("user").child(userId).child("CartItems")
-
-        cartReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val cartItems = snapshot.children.mapNotNull {
-                    it.getValue(CartItemsModel::class.java)
-                }
-                continuation.resume(cartItems)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                continuation.resumeWithException(error.toException())
-            }
-        })
+    suspend fun fetchCartItems(userId: String): List<CartItemsModel> {
+        val cartItems = mutableListOf<CartItemsModel>()
+        val snapshot = database.reference.child("user").child(userId).child("CartItems").get().await()
+        snapshot.children.forEach {
+            val item = it.getValue(CartItemsModel::class.java)
+            item?.let { cartItems.add(it) }
+        }
+        return cartItems
     }
 
-    suspend fun addCartItem(cartItem: CartItemsModel) {
-        val userId = auth.currentUser?.uid ?: ""
-        val cartReference = database.reference.child("user").child(userId).child("CartItems")
-        cartReference.push().setValue(cartItem).await()
+    suspend fun addCartItem(userId: String, cartItem: CartItemsModel) {
+        database.reference.child("user").child(userId).child("CartItems")
+            .push().setValue(cartItem).await()
     }
 
-    suspend fun removeCartItem(cartItemKey: String) {
-        val userId = auth.currentUser?.uid ?: ""
-        val cartReference = database.reference.child("user").child(userId).child("CartItems")
-        cartReference.child(cartItemKey).removeValue().await()
+    suspend fun removeCartItem(userId: String, cartItemKey: String) {
+        database.reference.child("user").child(userId).child("CartItems").child(cartItemKey).removeValue().await()
     }
 
-    suspend fun updateCartItemQuantity(cartItemKey: String, newQuantity: Int) {
-        val userId = auth.currentUser?.uid ?: ""
-        val cartReference = database.reference.child("user").child(userId).child("CartItems")
-        cartReference.child(cartItemKey).child("foodQuantity").setValue(newQuantity).await()
+    suspend fun updateCartItemQuantity(userId: String, cartItemKey: String, quantity: Int) {
+        database.reference.child("user").child(userId).child("CartItems")
+            .child(cartItemKey).child("foodQuantity").setValue(quantity).await()
     }
 }
