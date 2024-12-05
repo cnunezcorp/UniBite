@@ -2,6 +2,7 @@ package com.unibite.app.ui.activity
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -41,11 +42,9 @@ class DetailsActivity : AppCompatActivity() {
                 Glide.with(this@DetailsActivity).load(Uri.parse(item.foodImage)).into(detailFoodImage)
             }
         } ?: run {
-            // Si no hay datos, mostrar un error o mensaje
-            finish() // Opcional: Cerrar la actividad si no hay datos
+            finish()
         }
 
-        // Configurando el botón de retroceso
         binding.detailBackButton.setOnClickListener {
             finish()
         }
@@ -60,23 +59,37 @@ class DetailsActivity : AppCompatActivity() {
             val database = FirebaseDatabase.getInstance().reference
             val userId = auth.currentUser?.uid ?: ""
 
-            // Crear un CartItemsModel con todos los valores del MenuItem
-            val cartItem = CartItemsModel(
-                foodName = item.foodName,
-                foodPrice = item.foodPrice,
-                foodDescription = item.foodDescription,
-                foodImage = item.foodImage,
-                foodQuantity = 1,
-                foodIngredient = item.foodIngredient
-            )
+            // Referencia al nodo CartItems del usuario
+            val cartReference = database.child("user").child(userId).child("CartItems")
 
-            // Guardando datos en la BD
-            database.child("user").child(userId).child("CartItems").push().setValue(cartItem)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Producto Añadido al Carrito Correctamente 😁", Toast.LENGTH_LONG).show()
+            // Verifica si el producto ya existe en el carrito
+            cartReference.orderByChild("foodName").equalTo(item.foodName).get()
+                .addOnSuccessListener { snapshot ->
+                    if (snapshot.exists()) {
+                        Toast.makeText(this, "El producto ya está en el carrito", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Si no existe, añadirlo
+                        val cartItem = CartItemsModel(
+                            foodName = item.foodName,
+                            foodPrice = item.foodPrice,
+                            foodDescription = item.foodDescription,
+                            foodImage = item.foodImage,
+                            foodQuantity = 1,
+                            foodIngredient = item.foodIngredient
+                        )
+
+                        cartReference.push().setValue(cartItem)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Producto añadido al carrito correctamente 😁", Toast.LENGTH_LONG).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "No se puede añadir al carrito 😥", Toast.LENGTH_SHORT).show()
+                            }
+                    }
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "No Se Puede Añadir al Carrito 😥", Toast.LENGTH_SHORT).show()
+                .addOnFailureListener {exception ->
+                    Log.e("DetailsActivity", "Error al verificar el carrito: ${exception.message}")
+                    Toast.makeText(this, "Error al verificar el carrito", Toast.LENGTH_SHORT).show()
                 }
         } ?: run {
             Toast.makeText(this, "Error: Información del producto no disponible", Toast.LENGTH_SHORT).show()
