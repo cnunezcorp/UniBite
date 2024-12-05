@@ -80,7 +80,7 @@ class DetailsActivity : AppCompatActivity() {
 
                         cartReference.push().setValue(cartItem)
                             .addOnSuccessListener {
-                                Toast.makeText(this, "Producto añadido al carrito correctamente 😁", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this, "Producto añadido al carrito correctamente 😁", Toast.LENGTH_SHORT).show()
                             }
                             .addOnFailureListener {
                                 Toast.makeText(this, "No se puede añadir al carrito 😥", Toast.LENGTH_SHORT).show()

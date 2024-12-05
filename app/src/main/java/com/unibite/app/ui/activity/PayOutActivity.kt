@@ -52,17 +52,16 @@ class PayOutActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().reference
-
         setUserData()
 
         //Get user details from Firebase
         val intent = intent
-        foodItemName = intent.getStringArrayListExtra("FoodItemName") ?: arrayListOf()
-        foodItemPrice = intent.getStringArrayListExtra("FoodItemPrice") ?: arrayListOf()
-        foodItemImage = intent.getStringArrayListExtra("FoodItemImage") ?: arrayListOf()
-        foodItemDescription = intent.getStringArrayListExtra("FoodItemDescription") ?: arrayListOf()
-        foodItemIngredient = intent.getStringArrayListExtra("FoodItemIngredient") ?: arrayListOf()
-        foodItemQuantities = intent.getIntegerArrayListExtra("FoodItemQuantities") ?: arrayListOf()
+        foodItemName = intent.getStringArrayListExtra("FoodItemName") as ArrayList<String>
+        foodItemPrice = intent.getStringArrayListExtra("FoodItemPrice") as ArrayList<String>
+        foodItemImage = intent.getStringArrayListExtra("FoodItemImage") as ArrayList<String>
+        foodItemDescription = intent.getStringArrayListExtra("FoodItemDescription") as ArrayList<String>
+        foodItemIngredient = intent.getStringArrayListExtra("FoodItemIngredient") as ArrayList<String>
+        foodItemQuantities = intent.getIntegerArrayListExtra("FoodItemQuantities") as ArrayList<Int>
 
         totalAmount = calculateTotalAmount().toString() + "$"
         binding.payTotalAmount.isEnabled = false
@@ -160,3 +159,4 @@ class PayOutActivity : AppCompatActivity() {
         }
     }
 }
+

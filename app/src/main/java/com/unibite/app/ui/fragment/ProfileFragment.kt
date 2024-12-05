@@ -33,6 +33,16 @@ class ProfileFragment : Fragment() {
         binding =FragmentProfileBinding.inflate(inflater, container, false)
 
         setUserData()
+        binding.apply {
+            profileName.isEnabled = false
+            profileEmail.isEnabled = false
+            profilePhone.isEnabled = false
+            binding.editButton.setOnClickListener {
+                profileName.isEnabled = !profileName.isEnabled
+                profileEmail.isEnabled = !profileEmail.isEnabled
+                profilePhone.isEnabled = !profilePhone.isEnabled
+            }
+        }
         binding.saveInfoButton.setOnClickListener{
             val name = binding.profileName.text.toString()
             val email = binding.profileEmail.text.toString()
@@ -74,7 +84,7 @@ class ProfileFragment : Fragment() {
                         val userProfile = snapshot.getValue(UserModel::class.java)
                         if (userProfile != null ){
                             binding.profileName.setText(userProfile.name)
-                            binding.profileEmail.setText(userProfile.phone)
+                            binding.profileEmail.setText(userProfile.email)
                             binding.profilePhone.setText(userProfile.phone)
                         }
                     }

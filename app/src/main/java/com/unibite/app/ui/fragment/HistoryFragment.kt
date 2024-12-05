@@ -15,8 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.unibite.app.R
-import com.unibite.app.RecentOrderItems
+import com.unibite.app.ui.activity.RecentOrderItemsActivity
 import com.unibite.app.databinding.FragmentHistoryBinding
 import com.unibite.app.model.OrderDetails
 import com.unibite.app.ui.adapter.BuyAgainAdapter
@@ -28,7 +27,7 @@ class HistoryFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
     private lateinit var userId: String
-    private var listOfOrderItem: MutableList<OrderDetails> = mutableListOf()
+    private var listOfOrderItem: ArrayList<OrderDetails> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +53,8 @@ class HistoryFragment : Fragment() {
 
     private fun seeItemsRecentBuy() {
         listOfOrderItem.firstOrNull()?.let { recentBuy ->
-            val intent = Intent(requireContext(), RecentOrderItems::class.java)
-            intent.putExtra("RecentBuyOrderItem", recentBuy)
+            val intent = Intent(requireContext(), RecentOrderItemsActivity::class.java)
+            intent.putExtra("RecentBuyOrderItem", listOfOrderItem)
             startActivity(intent)
         }
     }
