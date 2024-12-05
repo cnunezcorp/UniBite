@@ -1,4 +1,4 @@
-package com.unibite.app.viewmodel
+package com.unibite.app.viewmodel.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -1,4 +1,4 @@
-package com.adminunibite.app.viewmodel
+package com.unibite.app.viewmodel.signUp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

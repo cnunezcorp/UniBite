@@ -11,20 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.unibite.app.R
 import com.unibite.app.data.MenuRepository
 import com.unibite.app.databinding.FragmentHomeBinding
 import com.unibite.app.domain.usecase.GetPopularItemsUseCase
 import com.unibite.app.model.MenuItemModel
 import com.unibite.app.ui.adapter.MenuAdapter
-import com.unibite.app.ui.adapter.PopularAdapter
-import com.unibite.app.viewmodel.HomeViewModel
-import com.unibite.app.viewmodel.HomeViewModelFactory
+import com.unibite.app.viewmodel.home.HomeViewModel
+import com.unibite.app.viewmodel.home.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
 

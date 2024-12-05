@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.adminunibite.app.viewmodel.LoginViewModel
-import com.adminunibite.app.viewmodel.LoginViewModelFactory
+import com.unibite.app.viewmodel.login.LoginViewModel
+import com.unibite.app.viewmodel.login.LoginViewModelFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

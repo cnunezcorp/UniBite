@@ -1,10 +1,8 @@
 package com.unibite.app.ui.activity
 
 import android.os.Bundle
-import android.text.Editable
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -15,13 +13,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.unibite.app.R
-import com.unibite.app.data.OrderRepository
 import com.unibite.app.databinding.ActivityPayOutBinding
-import com.unibite.app.domain.usecase.OrderUseCase
 import com.unibite.app.model.OrderDetails
 import com.unibite.app.ui.fragment.CongratsBottomSheetFragment
-import com.unibite.app.viewmodel.PayOutViewModel
-import com.unibite.app.viewmodel.PayOutViewModelFactory
 
 class PayOutActivity : AppCompatActivity() {
 

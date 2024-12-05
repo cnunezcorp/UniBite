@@ -1,8 +1,7 @@
-package com.unibite.app.viewmodel
+package com.unibite.app.viewmodel.payOut
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.unibite.app.data.OrderRepository
 import com.unibite.app.domain.usecase.OrderUseCase
 
 

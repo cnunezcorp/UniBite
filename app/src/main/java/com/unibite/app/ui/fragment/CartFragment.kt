@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.unibite.app.databinding.FragmentCartBinding
 import com.unibite.app.ui.activity.PayOutActivity
 import com.unibite.app.ui.adapter.CartAdapter
-import com.unibite.app.viewmodel.CartViewModel
-import com.unibite.app.viewmodel.CartViewModelFactory
+import com.unibite.app.viewmodel.cart.CartViewModel
+import com.unibite.app.viewmodel.cart.CartViewModelFactory
 import kotlinx.coroutines.launch
 
 class CartFragment : Fragment() {

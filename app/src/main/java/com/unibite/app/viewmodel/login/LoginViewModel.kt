@@ -1,4 +1,4 @@
-package com.adminunibite.app.viewmodel
+package com.unibite.app.viewmodel.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
